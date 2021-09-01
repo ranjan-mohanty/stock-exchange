@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.demo.stock.exchange'
+version = '1.0'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+jar {
+    archiveBaseName = 'stock-exchange'
+    version =  null
+    //archiveBaseVersion = null
+    manifest {
+        attributes 'Main-Class' : 'com.demo.stock.exchange.StockExchangeApplication'
+    }
+    // To create a single jar with all dependencies.
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    } {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
+
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
+
+    testImplementation 'junit:junit:4.12'
+}
